@@ -18,7 +18,7 @@ class JokesList extends Component {
         }
 
         this.seenJokes = new Set(this.state.jokes.map(j => j.text));
-        
+
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -61,15 +61,16 @@ class JokesList extends Component {
                 </div>
             )
         }
+        let jokes = this.state.jokes.sort((a, b) => b.votes - a.votes);
         return (
             <div className="JokesList">
                 <div className="JokesList-sidebar">
                     <h1 className="JokesList-title"><span>Dad</span> Jokes</h1>
                     <img src="https://assets.dryicons.com/uploads/icon/svg/8927/0eb14c71-38f2-433a-bfc8-23d9c99b3647.svg" alt="logo" />
-                    <button className="JokesList-getmore" onClick={this.handleClick}>New Jokes</button>
+                    <button className="JokesList-getmore" onClick={this.handleClick}>Fetch Jokes</button>
                 </div>
                 <div className="JokesList-jokes">
-                    {this.state.jokes.map(j => (
+                    {jokes.map(j => (
                         <Joke key={j.id} votes={j.votes} text={j.text} upvote={() => this.handleVote(j.id, 1)} downvote={() => this.handleVote(j.id, -1)}/>
                     ))}
                 </div>
