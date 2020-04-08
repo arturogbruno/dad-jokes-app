@@ -43,3 +43,15 @@
     overflow: scroll;
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.1);
 }
+
+.JokesList-spinner {
+    color: rgb(255, 206, 88);
+    text-align: center;
+}
+
+.JokesList-loading {
+    font-size: 4rem;
+    font-weight: 300;
+    letter-spacing: 0.6rem;
+    text-shadow: 0 6px 10px rgba(0, 0, 0, 0.3), 0 12px 9px rgba(0, 0, 0, 0.3);
+}

@@ -13,7 +13,8 @@ class JokesList extends Component {
         super(props);
 
         this.state = {
-            jokes: JSON.parse(window.localStorage.getItem("jokes") || "[]")
+            jokes: JSON.parse(window.localStorage.getItem("jokes") || "[]"),
+            loading: false
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -29,11 +30,11 @@ class JokesList extends Component {
             let res = await axios.get("https://icanhazdadjoke.com/", {headers: { Accept: "application/json" }});
             jokes.push({ id: uuidv4(), text: res.data.joke, votes: 0 });
         }
-        this.setState(st => ({ jokes: [...st.jokes, ...jokes] }), () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes)));
+        this.setState(st => ({ jokes: [...st.jokes, ...jokes], loading: false }), () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes)));
     }
 
     handleClick() {
-        this.getJokes();
+        this.setState({ loading: true }, () => this.getJokes());
     }
 
     handleVote(id, delta) {
@@ -41,6 +42,14 @@ class JokesList extends Component {
     }
 
     render() {
+        if(this.state.loading || !this.state.jokes.length) {
+            return(
+                <div className="JokesList-spinner">
+                    <i className="far fa-laugh fa-8x fa-spin"></i>
+                    <h1 className="JokesList-loading">Loading...</h1>
+                </div>
+            )
+        }
         return (
             <div className="JokesList">
                 <div className="JokesList-sidebar">
